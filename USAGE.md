@@ -2,7 +2,7 @@
 
 ## Installing ReFrame
 
-Currently, tests are developed and run using ReFrame v4.6.3. A shared install is available on CARC HPC clusters in `/project/jkhong_1307/rfm/reframe-4.6.3`.
+Currently, tests are developed and run using ReFrame v4.6.3. A shared installation is available on Laguna in `/project/jkhong_1307/rfm/reframe-4.6.3`.
 
 The following steps were used to install ReFrame:
 
@@ -26,7 +26,7 @@ chmod -R ug-w reframe-4.6.3
 
 ## Installing the Laguna test suite
 
-A shared install of the test suite is available on Laguna in `/project/jkhong_1307/rfm/reframe-tests-laguna`.
+A shared installation of the test suite is available on Laguna in `/project/jkhong_1307/rfm/reframe-tests-laguna`.
 
 To install the CARC test suite, clone the repo:
 
