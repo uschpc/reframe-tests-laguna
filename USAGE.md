@@ -122,9 +122,13 @@ export SBATCH_RESERVATION=res_12345
 
 The variable will then be exported to the ReFrame Slurm jobs and allow them to run.
 
-## Running tests during maintenance periods
+## Checking test logs
 
-A list of specific tests to run during maintenance periods.
+Various log files can be found in `/project/jkhong_1307/rfm/`.
+
+## Reference guide for test suite
+
+A reference guide for specific tests to run during testing or maintenance periods.
 
 ```
 module purge
@@ -140,8 +144,11 @@ export SBATCH_RESERVATION=<res>
 # Test every node using file download test
 ./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/file-download.py --distribute=all -r
 
-# Test GPU access for every node in gpu partition
-./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/container-gpu-hello.py --distribute=all -r
+# Test every node using Apptainer test
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/apptainer-hello.py --distribute=all -r
+
+# Test GPU access for every node in gpu partition using Apptainer test
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/apptainer-gpu-hello.py --distribute=all -r
 
 # Test every node in compute and gpu partitions using STREAM test
 ./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/stream-compute.py --distribute=all -r
@@ -150,9 +157,4 @@ export SBATCH_RESERVATION=<res>
 # Test every node in compute and gpu partitions using HPCG test
 ./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-compute.py -r
 ./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-gpu.py -r
-
 ```
-
-## Checking test logs
-
-Various log files can be found in `/project/jkhong_1307/rfm/`.
