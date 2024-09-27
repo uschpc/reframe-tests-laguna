@@ -14,7 +14,7 @@ site_configuration = {
     "systems": [
         {
             "name": "laguna",
-            "descr": "Laguna Regional Cluster",
+            "descr": "Laguna regional cluster",
             "stagedir": "/project/jkhong_1307/rfm/stage/laguna-stage-$(date --iso-8601=seconds)",
             "outputdir": "/project/jkhong_1307/rfm/output/laguna-output-$(date --iso-8601=seconds)",
             "modules_system": "lmod",
