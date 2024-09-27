@@ -2,7 +2,7 @@
 
 ## Installing ReFrame
 
-Currently, tests are developed and run using ReFrame v4.6.2. A shared install is available on CARC HPC clusters in `/project/jkhong_1307/rfm/reframe-4.6.2`.
+Currently, tests are developed and run using ReFrame v4.6.3. A shared install is available on CARC HPC clusters in `/project/jkhong_1307/rfm/reframe-4.6.3`.
 
 The following steps were used to install ReFrame:
 
@@ -10,21 +10,18 @@ The following steps were used to install ReFrame:
 cd /project/jkhong_1307/rfm
 module purge
 module load gcc/13.3.0 python/3.11.9 curl tar gzip
-curl -LO https://github.com/reframe-hpc/reframe/archive/refs/tags/v4.6.2.tar.gz
-tar -xf v4.6.2.tar.gz
-rm v4.6.2.tar.gz
-cd reframe-4.6.2
+curl -LO https://github.com/reframe-hpc/reframe/archive/refs/tags/v4.6.3.tar.gz
+tar -xf v4.6.3.tar.gz
+rm v4.6.3.tar.gz
+cd reframe-4.6.3
 ./bootstrap.sh
-./bin/reframe -V
-```
-
-The `./bin/reframe` script was modified to include the path to the python3 binary used for the install so that the module does not need to be loaded in order to run ReFrame.
-
-In addition, write permissions were removed to protect the installation:
-
-```
-cd /project/jkhong_1307/rfm
-chmod -R ug-w reframe-4.6.2
+py="$(type -p python3)"
+sed -i "1s%.*%#\!${py}%" ./bin/reframe
+unset py
+module purge
+cd ..
+chmod -R ug-w reframe-4.6.3
+./reframe-4.6.3/bin/reframe -V
 ```
 
 ## Installing the Laguna test suite
@@ -44,7 +41,7 @@ To list and validate tests, use the `--list` option:
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ --list
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ --list
 ```
 
 The `-C` option specifies the path to a configuration file, and the `-c` option specifies the path to the test files.
@@ -59,7 +56,7 @@ To run an individual test, use the path to the test file. For example:
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py -r
 ```
 
 ### Subset of tests
@@ -68,7 +65,7 @@ To run a subset of tests, use the `-n` option with grep-like syntax. For example
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -n 'Python|Julia' -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -n 'Python|Julia' -r
 ```
 
 ### Tagged tests
@@ -77,7 +74,7 @@ To run tests with a specific tag, use the `-t` option and specify the tag value.
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -t daily -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -t daily -r
 ```
 
 ### Tests for specific partition
@@ -86,7 +83,7 @@ To run tests for a specific partition, use the `--system` option and specify the
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ --system=laguna:gpu -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ --system=laguna:gpu -r
 ```
 
 ### Tests for every node in specific partition
@@ -95,7 +92,7 @@ To run tests for every node in a specific partition, use the `--system` and `--d
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py --system=laguna:compute --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py --system=laguna:compute --distribute=all -r
 ```
 
 ### Entire test suite
@@ -104,7 +101,7 @@ To run the entire suite of tests, use the path to the tests directory:
 
 ```
 cd /project/jkhong_1307/rfm
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -r
 ```
 
 ### Reservations
@@ -135,24 +132,24 @@ cd /project/jkhong_1307/rfm
 export SBATCH_RESERVATION=<res>
 
 # All tests
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/ -r
 
 # Test every node using Julia test
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/julia-pi.py --distribute=all -r
 
 # Test every node using file download test
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/file-download.py --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/file-download.py --distribute=all -r
 
 # Test GPU access for every node in gpu partition
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/container-gpu-hello.py --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/container-gpu-hello.py --distribute=all -r
 
 # Test every node in compute and gpu partitions using STREAM test
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/stream-compute.py --distribute=all -r
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/stream-gpu.py --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/stream-compute.py --distribute=all -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/stream-gpu.py --distribute=all -r
 
 # Test every node in compute and gpu partitions using HPCG test
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-compute.py -r
-./reframe-4.6.2/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-gpu.py -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-compute.py -r
+./reframe-4.6.3/bin/reframe -C ./reframe-tests-laguna/config/laguna.py -c ./reframe-tests-laguna/tests/hpcg-gpu.py -r
 
 ```
 

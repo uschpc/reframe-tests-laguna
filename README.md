@@ -13,7 +13,7 @@ The CARC [ReFrame](https://reframe-hpc.readthedocs.io/en/stable/index.html) syst
 - Containers
 - Single-node and multi-node jobs
 
-Currently, tests are developed and run using ReFrame v4.6.2.
+Currently, tests are developed and run using ReFrame v4.6.3.
 
 ## License
 
