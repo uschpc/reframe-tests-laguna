@@ -1,0 +1,12 @@
+Bootstrap: docker
+From: debian:latest
+
+%post
+
+apt-get -y update
+apt-get -y upgrade
+apt-get -y install rsync
+
+%test
+
+cat /etc/os-release

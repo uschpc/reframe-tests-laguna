@@ -2,8 +2,8 @@ import reframe as rfm
 import reframe.utility.sanity as sn
 
 @rfm.simple_test
-class ContainerGPUHello(rfm.RunOnlyRegressionTest):
-    descr = "Container GPU access"
+class ApptainerGPUHello(rfm.RunOnlyRegressionTest):
+    descr = "Apptainer GPU access"
     valid_systems = [
         "laguna:gpu"
     ]
