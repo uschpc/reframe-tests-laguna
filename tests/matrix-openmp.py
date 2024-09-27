@@ -11,6 +11,7 @@ class MatrixOpenMP(rfm.RegressionTest):
     valid_prog_environs = [
         "env-gcc-13.3.0"
     ]
+    build_locally = False
     sourcesdir = "./src/matrix-openmp"
     sourcepath = "matrix-vector-multiplication-openmp.c"
     executable_opts = [

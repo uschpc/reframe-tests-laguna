@@ -10,6 +10,7 @@ class MatrixCUDAL40S(rfm.RegressionTest):
     valid_prog_environs = [
         "env-gcc-13.3.0-cuda-12.4.0"
     ]
+    build_locally = False
     sourcesdir = "./src/matrix-cuda"
     sourcepath = "matrix-vector-multiplication-cuda.cu"
     build_system = "SingleSource"

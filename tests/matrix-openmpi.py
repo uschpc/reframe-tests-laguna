@@ -11,6 +11,7 @@ class MatrixOpenMPI(rfm.RegressionTest):
     valid_prog_environs = [
         "env-gcc-13.3.0-openmpi-5.0.5"
     ]
+    build_locally = False
     sourcesdir = "./src/matrix-mpi"
     sourcepath = "matrix-vector-multiplication-mpi-openmp.c"
     executable_opts = [
