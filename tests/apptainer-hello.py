@@ -5,6 +5,7 @@ import reframe.utility.sanity as sn
 class ApptainerHello(rfm.RunOnlyRegressionTest):
     descr = "Apptainer hello world"
     valid_systems = [
+        "laguna:compute",
         "laguna:gpu"
     ]
     valid_prog_environs = [
